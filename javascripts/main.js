@@ -70,23 +70,22 @@ $('#select_terminal').change(function(event) {
     console.log($('option[value="' + $('#select_terminal').val() + '"]').text())
 })
 
-var ticket_par = ''
-var ticket_val = ''
+var input_type = ''
 $('#barcode_input').change(function(event) {
     $('#ticket_id_input').val('')
     q_options['ticket'] = $('#barcode_input').val()
     delete q_options['ticket_id']
+    input_type = 'triipkood'
 })
 $('#ticket_id_input').change(function(event) {
     $('#barcode_input').val('')
     q_options['ticket_id'] = $('#ticket_id_input').val()
     delete q_options['ticket']
+    input_type = 'pileti id'
 })
 $('#submit_ticket').click(function(event) {
-    // console.log(configuration.TICKETSTATUS_URL + '?term=' + $('#select_terminal').val() + '&op=T&' + ticket_q)
     $.getJSON(configuration.TICKETSTATUS_URL, q_options, function(json, textStatus) {
-            /*optional stuff to do after success */
-        console.log(json)
+        // console.log(json)
         $('#result_rows').text('')
         json.rows.forEach(function rowLoop(r) {
             console.log(r)
@@ -95,18 +94,11 @@ $('#submit_ticket').click(function(event) {
             row_element.text(r)
             $('#result_rows').append(row_element)
         })
-            // $('#result_rows').text(json.status)
     })
-
-//         $.ajax({'url': configuration.TICKETSTATUS_URL + '?term=' + $('#select_terminal').val() + '&op=T&' + ticket_q })
-// // ?term=710227&op=T&ticket=43200708698504'
-//         .done(function Ok( data ) {
-//             console.log(data)
-//             $('#result_row').text(data)
-//         })
-//         .fail(function Fail( data ) {
-//             console.log(data)
-//         })
+    .fail(function Fail( data ) {
+        console.log(data)
+        $('#result_rows').text('Paha ' + input_type + '.')
+    })
 
     return false
 })
