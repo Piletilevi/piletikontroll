@@ -13,3 +13,14 @@ body {
   width: 200px;
 }
 
+.status_A {
+  background-color: green;
+}
+
+.status_D, .status_I {
+  background-color: yellow;
+}
+
+.status_B, .status_C {
+  background-color: red;
+}

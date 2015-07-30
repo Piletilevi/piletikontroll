@@ -20,7 +20,7 @@ var configuration = {
 configuration['ENTU_API'] = configuration.ENTU_URI + 'api2/'
 configuration['ENTU_API_ENTITY'] = configuration.ENTU_API + 'entity'
 configuration['ENTU_API_TERMINALS'] = configuration.ENTU_API_ENTITY + '?definition=terminal'
-configuration['TICKETSTATUS_URL'] = 'q.html'
+configuration['TICKETSTATUS_URL'] = 'http://84.50.247.234:8072/ticketstatus.php'
 
 
 
