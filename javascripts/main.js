@@ -58,11 +58,11 @@ $.ajax({'url': configuration.ENTU_API_TERMINALS })
     console.log(data)
 })
 
-var q_options = {op: 'T', ticket: '', ticket_id: ''}
+var q_options = {op: '', ticket: ''}
 
 $('#select_terminal').change(function(event) {
     $('#select_terminal_row').addClass('hidden')
-    $('#terminal_name').text($('option[value="' + $('#select_terminal').val() + '"]').text())
+    $('#terminal_name').text($('option[value="' + $('#select_terminal').val() + '"]').html())
     $('#terminal_name_row').removeClass('hidden')
     $('#ticket_check_row').removeClass('hidden')
     q_options['term'] = $('#select_terminal').val()
@@ -74,13 +74,13 @@ var input_type = ''
 $('#barcode_input').change(function(event) {
     $('#ticket_id_input').val('')
     q_options['ticket'] = $('#barcode_input').val()
-    delete q_options['ticket_id']
+    q_options['op'] = 'T'
     input_type = 'triipkood'
 })
 $('#ticket_id_input').change(function(event) {
     $('#barcode_input').val('')
-    q_options['ticket_id'] = $('#ticket_id_input').val()
-    delete q_options['ticket']
+    q_options['ticket'] = $('#ticket_id_input').val()
+    q_options['op'] = 'M'
     input_type = 'pileti id'
 })
 $('#submit_ticket').click(function(event) {
