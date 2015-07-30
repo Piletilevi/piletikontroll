@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>PL-kontroll</title>
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="stylesheets/template.css" rel="stylesheet">
+        <link href="images/favicon.ico" rel="shortcut icon">
+
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="javascripts/main.js"></script>
+    </head>
+
+    <body class="modal-body">
+
+        <div id="container" class="container" class="col-md-4">
+
+            <div class="row" id="select_terminal_row">
+                <div class="form-group">
+                    <!-- <label for="sel1">Vali terminal:</label> -->
+                    <select class="form-control" id="select_terminal">
+                        <option value="">Vali terminal</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row hidden" id="terminal_name_row">
+                <label for="terminal_name" class="control-label col-md-2">Terminal</label>
+                <div id="terminal_name" class="col-md-10"></div>
+            </div>
+
+            <div class="row hidden" id="ticket_check_row">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label for="ticket_id">Piletilevi pileti ID-number:</label>
+                        <input type="text" class="form-control" id="ticket_id_input">
+                    </div>
+                    <div class="form-group">
+                        <label for="barcode">Pileti triipkood:</label>
+                        <input type="text" class="form-control" id="barcode_input">
+                    </div>
+                    <button type="submit" class="btn btn-default" id="submit_ticket">Kontrolli</button>
+                </form>
+            </div>
+
+            <div class="row" id="result_rows">
+            </div>
+
+
+
+        </div><!-- /.container -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="lib/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+        <script src="javascripts/main.js"></script>
+    </body>
+</html>
