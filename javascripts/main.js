@@ -87,6 +87,7 @@ $('#submit_ticket').click(function(event) {
     $.getJSON(configuration.TICKETSTATUS_URL, q_options, function(json, textStatus) {
         // console.log(json)
         $('#result_rows').text('')
+        $('body').addClass('status_' + json.status)
         json.rows.forEach(function rowLoop(r) {
             console.log(r)
             var row_element = $('<div>')
