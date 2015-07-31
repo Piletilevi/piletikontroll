@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
                 }
 
                 terminal.id = op.get(body, 'result.properties.id.values.0.db_value', null)
-                terminal.name = op.get(body, 'result.properties.name.values.0.db_value', null)
+                terminal.name = op.get(body, 'result.displayname', null)
 
                 terminals.push(terminal)
                 callback()
