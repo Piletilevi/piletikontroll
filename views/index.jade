@@ -19,7 +19,7 @@ block content
                 input#barcode.form-control(type='text')
 
             .hidden.form-group.col-xs-12.col-sm-2
-                label.hidden-xs.control-label(for='check') &nbsp;
+                label.control-label(for='check') &nbsp;
                 button#check.btn.btn-info.col-xs-12 Kontrolli
 
         .row
@@ -70,6 +70,7 @@ block content
         $('#check').click(function(event) {
             $('#spinner').removeClass('hidden')
             $('#results').html('')
+            $('#barcode, #ticket_id, #check').attr('disabled', 'disabled')
             for(s in statuses) {
                 $('#results').parent().removeClass(statuses[s])
             }
@@ -78,10 +79,12 @@ block content
                 $('#results').html(data.rows.join('<br>'))
                 $('#results').parent().addClass(statuses[data.status])
                 $('#results').parent().removeClass('hidden')
+                $('#barcode, #ticket_id, #check').attr('disabled', null)
             }).fail(function(data) {
                 $('#spinner').addClass('hidden')
                 $('#results').html('VIGA<br>sisesta uuesti')
                 $('#results').parent().addClass('alert-danger')
                 $('#results').parent().removeClass('hidden')
+                $('#barcode, #ticket_id, #check').attr('disabled', null)
             })
         })
