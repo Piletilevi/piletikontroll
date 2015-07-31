@@ -58,7 +58,7 @@ express()
 
     // static files path & favicon
     .use(express.static(path.join(__dirname, 'public')))
-    // .use(favicon(path.join(__dirname, 'public', 'images', 'helpific-logo.ico')))
+    .use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
     // logging
     .use(logger(':date[iso] | HTTP/:http-version | :method | :status | :url | :res[content-length] b | :response-time ms | :remote-addr | :referrer | :user-agent', {stream: access_log_stream}))
