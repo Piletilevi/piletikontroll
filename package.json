@@ -1,0 +1,40 @@
+{
+    "private": true,
+    "name": "piletikontroll",
+    "version": "0.1.0",
+    "description": "PL piletikontroll",
+    "homepage": "https://github.com/Piletilevi/piletikontroll",
+    "author": "Argo Roots <argo@roots.ee>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Piletilevi/piletikontroll.git"
+    },
+    "bugs": {
+        "email": "argo@roots.ee",
+        "url": "https://github.com/Piletilevi/piletikontroll/issues"
+    },
+    "scripts": {
+        "start": "node ./app.js"
+    },
+    "engines": {
+        "node": "0.x"
+    },
+    "dependencies": {
+        "async": "1.x",
+        "body-parser": "1.x",
+        "cookie-parser": "1.x",
+        "debug": "2.x",
+        "express": "4.x",
+        "file-stream-rotator": "0.x",
+        "fs": "0.x",
+        "jade": "1.x",
+        "morgan": "1.x",
+        "newrelic": "1.x",
+        "object-path": "0.x",
+        "randomstring": "1.x",
+        "request": "2.x",
+        "serve-favicon": "2.x",
+        "stylus": "0.x",
+        "underscore": "1.x"
+    }
+}

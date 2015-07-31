@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    .container
+        .row
+            .form-group.col-xs-12
+                select#select_terminal.form-control
+                    option(value='') Vali terminal
+                    each t in terminals
+                        option(value=t.id)= t.name
+
+    script.
