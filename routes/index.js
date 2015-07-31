@@ -49,4 +49,18 @@ router.get('/', function(req, res, next) {
 
 
 
+// GET ticket info
+router.get('/ticket', function(req, res, next) {
+    request.get({url: APP_PL_URL, qs: req.query, strictSSL: true, json: true}, function(error, response, body) {
+        if(error) return next(error)
+        if(response.statusCode !== 200) return next(new Error(op.get(body, 'error', body)))
+
+        res.setHeader('Content-Type', 'application/json')
+        res.status(200)
+        res.send(body)
+    })
+})
+
+
+
 module.exports = router

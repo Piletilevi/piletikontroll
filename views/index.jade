@@ -2,7 +2,7 @@ extends layout
 
 block content
     .container
-        form.row
+        .row
             .form-group.col-xs-12
                 label.control-label(for='select_terminal') Terminal
                 select#select_terminal.form-control
@@ -10,27 +10,32 @@ block content
                     each t in terminals
                         option(value=t.id)= t.name
 
-            .hidden.form-group.col-xs-12.col-sm-6
+            .hidden.form-group.col-xs-12.col-sm-5
                 label.control-label(for='ticket_id') Piletilevi pileti ID-number
                 input#ticket_id.form-control(type='text')
 
-            .hidden.form-group.col-xs-12.col-sm-6
+            .hidden.form-group.col-xs-12.col-sm-5
                 label.control-label(for='barcode') Pileti triipkood
                 input#barcode.form-control(type='text')
 
-        #result_rows.row
+            .hidden.form-group.col-xs-12.col-sm-2
+                label.control-label(for='check') &nbsp;
+                button#check.btn.btn-success.col-xs-12 Kontrolli
+
+        .row
+            .hidden.col-xs-12
+                pre#results.col-xs-12
+
 
 
     script.
-        var q_options = {op: '', ticket: ''}
-        var input_type = ''
+        var q_options = {}
+        var input_type =
 
         $('#select_terminal').change(function(event) {
-            select = $(this)
-            select.attr('disabled', 'disabled')
-
-            $('#ticket_id').parent().removeClass('hidden')
-            $('#barcode').parent().removeClass('hidden')
+            $(this).attr('disabled', 'disabled')
+            $('#ticket_id, #barcode, #check, #results').parent().removeClass('hidden')
+            q_options.term = $(this).val()
         })
 
         $('#barcode').change(function(event) {
@@ -45,4 +50,10 @@ block content
             q_options.ticket = $(this).val()
             q_options.op = 'M'
             input_type = 'pileti id'
+        })
+
+        $('#check').click(function(event) {
+            $.get('/ticket', q_options, function(data) {
+                $('#results').html(JSON.stringify(data, null, '  '))
+            }).fail(console.log)
         })
