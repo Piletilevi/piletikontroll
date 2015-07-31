@@ -30,7 +30,7 @@ block content
 
             .col-xs-12
                 .hidden.alert.text-center.col-xs-12
-                    strong#results
+                    #results
 
     script.
         var q_options = {}
@@ -77,11 +77,13 @@ block content
                 $('#results').parent().removeClass(statuses[s])
             }
             $.get('/ticket', q_options, function(data) {
-                $('#results').html(data.rows.join('<br>'))
+                var message = data.rows
+                message[0] = '<strong>' + message[0] + '</strong>'
+                $('#results').html(message.join('<br>'))
                 $('#results').parent().addClass(statuses[data.status])
                 reset_form()
             }).fail(function(data) {
-                $('#results').html('VIGA<br>sisesta uuesti')
+                $('#results').html('<strong>VIGA</strong><br>sisesta uuesti')
                 $('#results').parent().addClass('alert-danger')
                 reset_form()
             })
