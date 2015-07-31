@@ -11,12 +11,16 @@ html
         link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
         link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
 
+        link(rel='icon', type='image/png', href='/images/PL_Logo_app.png')
+        link(rel='apple-touch-icon', type='image/png', href='/images/PL_Logo_app.png')
+
         script(src='https://code.jquery.com/jquery-2.1.4.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
     body
         .navbar.navbar-default
             .container
                 .navbar-header
-                    a.navbar-brand(href='/') Piletilevi piletikontroll
-
-        block content
+                    a.navbar-brand(href='/')
+                        img(src='http://www.piletilevi.ee/userfiles/image/PL_Logo_app.png', alt='Piletilevi logo', style='height:80px')
+        #content
+            block content
