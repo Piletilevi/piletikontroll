@@ -41,7 +41,7 @@ router.get('/', function(req, res, next) {
             if(error) return callback(error)
 
             res.render('index', {
-                terminals: terminals
+                terminals: terminals.sort(function(obj1, obj2) { return obj1.name > obj2.name })
             })
         })
     })

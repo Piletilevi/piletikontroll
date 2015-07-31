@@ -2,11 +2,47 @@ extends layout
 
 block content
     .container
-        .row
+        form.row
             .form-group.col-xs-12
+                label.control-label(for='select_terminal') Terminal
                 select#select_terminal.form-control
                     option(value='') Vali terminal
                     each t in terminals
                         option(value=t.id)= t.name
 
+            .hidden.form-group.col-xs-12.col-sm-6
+                label.control-label(for='ticket_id') Piletilevi pileti ID-number
+                input#ticket_id.form-control(type='text')
+
+            .hidden.form-group.col-xs-12.col-sm-6
+                label.control-label(for='barcode') Pileti triipkood
+                input#barcode.form-control(type='text')
+
+        #result_rows.row
+
+
     script.
+        var q_options = {op: '', ticket: ''}
+        var input_type = ''
+
+        $('#select_terminal').change(function(event) {
+            select = $(this)
+            select.attr('disabled', 'disabled')
+
+            $('#ticket_id').parent().removeClass('hidden')
+            $('#barcode').parent().removeClass('hidden')
+        })
+
+        $('#barcode').change(function(event) {
+            $('#ticket_id').val('')
+            q_options.ticket = $(this).val()
+            q_options.op = 'T'
+            input_type = 'triipkood'
+        })
+
+        $('#ticket_id').change(function(event) {
+            $('#barcode').val('')
+            q_options.ticket = $(this).val()
+            q_options.op = 'M'
+            input_type = 'pileti id'
+        })
