@@ -4,6 +4,7 @@ var path    = require('path')
 var request = require('request')
 var async   = require('async')
 var op      = require('object-path')
+var _       = require('underscore')
 var debug   = require('debug')('app:' + path.basename(__filename).replace('.js', ''))
 
 
@@ -14,7 +15,7 @@ router.get('/', function(req, res, next) {
         if(error) return callback(error)
         if(response.statusCode !== 200 || !body.result) return callback(new Error(op.get(body, 'error', body)))
 
-        terminals = {}
+        terminals = []
         async.each(body.result, function(entity, callback) {
             request.get({url: APP_ENTU_URL + '/entity-' + entity.id, strictSSL: true, json: true}, function(error, response, body) {
                 if(error) return callback(error)
@@ -32,13 +33,17 @@ router.get('/', function(req, res, next) {
 
                 terminal.id = op.get(body, 'result.properties.id.values.0.db_value', null)
                 terminal.name = op.get(body, 'result.properties.name.values.0.db_value', null)
+                terminal.city = op.get(body, 'result.properties.city.values.0.db_value', null)
 
-                op.insert(terminals, op.get(body, 'result.properties.city.values.0.db_value', null), terminal)
+                terminals.push(terminal)
                 callback()
             })
 
         }, function(error){
             if(error) return callback(error)
+
+            terminals = _.sortBy(terminals, 'city')
+            terminals = _.groupBy(terminals, 'city')
 
             res.render('index', {
                 terminals: terminals

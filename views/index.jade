@@ -6,8 +6,7 @@ block content
             .form-group.col-xs-12
                 label.control-label(for='select_terminal') Terminal
                 select#select_terminal.form-control
-                    option(value='') Vali terminal
-                    optgroup(label='')
+                    option(value='')
                     each t, g in terminals
                         optgroup(label=g)
                             each i in t.sort(function(obj1, obj2) { return obj1.name > obj2.name })
