@@ -20,21 +20,27 @@ block content
 
             .hidden.form-group.col-xs-12.col-sm-2
                 label.control-label(for='check') &nbsp;
-                button#check.btn.btn-success.col-xs-12 Kontrolli
+                button#check.btn.btn-info.col-xs-12 Kontrolli
 
         .row
-            .hidden.col-xs-12
-                pre#results.col-xs-12
-
-
+            .col-xs-12
+                .hidden.alert.text-center.col-xs-12
+                    strong#results
 
     script.
         var q_options = {}
-        var input_type =
+        var input_type = ''
+        var statuses = {
+            'A': 'alert-success',
+            'B': 'alert-danger',
+            'C': 'alert-danger',
+            'D': 'alert-warning',
+            'I': 'alert-warning'
+        }
 
         $('#select_terminal').change(function(event) {
             $(this).attr('disabled', 'disabled')
-            $('#ticket_id, #barcode, #check, #results').parent().removeClass('hidden')
+            $('#ticket_id, #barcode, #check').parent().removeClass('hidden')
             q_options.term = $(this).val()
         })
 
@@ -52,8 +58,18 @@ block content
             input_type = 'pileti id'
         })
 
+        $('#barcode, #ticket_id').keypress(function(e) {
+            if(e.which == 13) $('#check').trigger('click')
+        })
+
         $('#check').click(function(event) {
+            $('#results').html('')
+            for(s in statuses) {
+                $('#results').parent().removeClass(statuses[s])
+            }
             $.get('/ticket', q_options, function(data) {
-                $('#results').html(JSON.stringify(data, null, '  '))
+                $('#results').parent().addClass(statuses[data.status])
+                $('#results').parent().removeClass('hidden')
+                $('#results').html(data.rows.join('<br>'))
             }).fail(console.log)
         })
