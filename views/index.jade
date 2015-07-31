@@ -23,13 +23,15 @@ block content
                 button#check.btn.btn-info.col-xs-12 Kontrolli
 
         .row
+            #spinner.hidden.text-center.col-xs-12
+                i.fa.fa-refresh.fa-spin
+
             .col-xs-12
                 .hidden.alert.text-center.col-xs-12
                     strong#results
 
     script.
         var q_options = {}
-        var input_type = ''
         var statuses = {
             'A': 'alert-success',
             'B': 'alert-danger',
@@ -41,6 +43,7 @@ block content
         $('#select_terminal').change(function(event) {
             $(this).attr('disabled', 'disabled')
             $('#ticket_id, #barcode, #check').parent().removeClass('hidden')
+            $('#ticket_id').focus()
             q_options.term = $(this).val()
         })
 
@@ -48,28 +51,37 @@ block content
             $('#ticket_id').val('')
             q_options.ticket = $(this).val()
             q_options.op = 'T'
-            input_type = 'triipkood'
         })
 
         $('#ticket_id').change(function(event) {
             $('#barcode').val('')
             q_options.ticket = $(this).val()
             q_options.op = 'M'
-            input_type = 'pileti id'
         })
 
         $('#barcode, #ticket_id').keypress(function(e) {
-            if(e.which == 13) $('#check').trigger('click')
+            if(e.which == 13) {
+                $('#check').trigger('click')
+            } else {
+                $(this).trigger('change')
+            }
         })
 
         $('#check').click(function(event) {
+            $('#spinner').removeClass('hidden')
             $('#results').html('')
             for(s in statuses) {
                 $('#results').parent().removeClass(statuses[s])
             }
             $.get('/ticket', q_options, function(data) {
+                $('#spinner').addClass('hidden')
+                $('#results').html(data.rows.join('<br>'))
                 $('#results').parent().addClass(statuses[data.status])
                 $('#results').parent().removeClass('hidden')
-                $('#results').html(data.rows.join('<br>'))
-            }).fail(console.log)
+            }).fail(function(data) {
+                $('#spinner').addClass('hidden')
+                $('#results').html('VIGA<br>sisesta uuesti')
+                $('#results').parent().addClass('alert-danger')
+                $('#results').parent().removeClass('hidden')
+            })
         })
