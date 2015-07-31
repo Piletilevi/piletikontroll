@@ -7,8 +7,11 @@ block content
                 label.control-label(for='select_terminal') Terminal
                 select#select_terminal.form-control
                     option(value='') Vali terminal
-                    each t in terminals
-                        option(value=t.id)= t.name
+                    optgroup(label='')
+                    each t, g in terminals
+                        optgroup(label=g)
+                            each i in t.sort(function(obj1, obj2) { return obj1.name > obj2.name })
+                                option(value=i.id)= i.name
 
             .hidden.form-group.col-xs-12.col-sm-5
                 label.control-label(for='ticket_id') Piletilevi pileti ID-number

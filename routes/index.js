@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
         if(error) return callback(error)
         if(response.statusCode !== 200 || !body.result) return callback(new Error(op.get(body, 'error', body)))
 
-        terminals = []
+        terminals = {}
         async.each(body.result, function(entity, callback) {
             request.get({url: APP_ENTU_URL + '/entity-' + entity.id, strictSSL: true, json: true}, function(error, response, body) {
                 if(error) return callback(error)
@@ -31,9 +31,9 @@ router.get('/', function(req, res, next) {
                 }
 
                 terminal.id = op.get(body, 'result.properties.id.values.0.db_value', null)
-                terminal.name = op.get(body, 'result.displayname', null)
+                terminal.name = op.get(body, 'result.properties.name.values.0.db_value', null)
 
-                terminals.push(terminal)
+                op.insert(terminals, op.get(body, 'result.properties.city.values.0.db_value', null), terminal)
                 callback()
             })
 
@@ -41,7 +41,7 @@ router.get('/', function(req, res, next) {
             if(error) return callback(error)
 
             res.render('index', {
-                terminals: terminals.sort(function(obj1, obj2) { return obj1.name > obj2.name })
+                terminals: terminals
             })
         })
     })
