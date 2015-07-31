@@ -4,7 +4,7 @@ block content
     .container
         .row
             .form-group.col-xs-12
-                label.control-label(for='select_terminal') Piletikontrolli ja käepaela vahetuse punkt
+                label.control-label(for='select_terminal') Vali piletikontrolli ja käepaela vahetuse punkt
                 select#select_terminal.form-control
                     option(value='')
                     each t, g in terminals
@@ -13,16 +13,16 @@ block content
                                 option(value=i.id)= i.name
 
             .hidden.form-group.col-xs-12.col-sm-5
-                label.control-label(for='ticket_id') Piletilevi pileti ID-number
-                input#ticket_id.form-control(type='text')
+                label.control-label(for='barcode') Sisesta pileti triipkoodi number
+                input#barcode.form-control(type='text')
 
             .hidden.form-group.col-xs-12.col-sm-5
-                label.control-label(for='barcode') või muu pileti triipkoodi number
-                input#barcode.form-control(type='text')
+                label.control-label(for='ticket_id') või Piletilevi tavapileti ID-number
+                input#ticket_id.form-control(type='text')
 
             .hidden.form-group.col-xs-12.col-sm-2
                 label.control-label(for='check') &nbsp;
-                button#check.btn.btn-info.col-xs-12 KONTROLLI
+                button#check.btn.btn-info.col-xs-12 Kontrolli
 
         .row
             #spinner.hidden.text-center.col-xs-12
@@ -45,7 +45,7 @@ block content
         $('#select_terminal').change(function(event) {
             $(this).attr('disabled', 'disabled')
             $('#barcode, #ticket_id, #check').parent().removeClass('hidden')
-            $('#ticket_id').focus()
+            $('#barcode').focus()
             q_options.term = $(this).val()
         })
 
