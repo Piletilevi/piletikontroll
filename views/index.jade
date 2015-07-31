@@ -13,16 +13,16 @@ block content
                                 option(value=i.id)= i.name
 
             .hidden.form-group.col-xs-12.col-sm-5
-                label.control-label(for='barcode') Pileti triipkood
-                input#barcode.form-control(type='text')
+                label.control-label(for='ticket_id') Piletilevi pileti ID-number
+                input#ticket_id.form-control(type='text')
 
             .hidden.form-group.col-xs-12.col-sm-5
-                label.control-label(for='ticket_id') Pileti ID-number
-                input#ticket_id.form-control(type='text')
+                label.control-label(for='barcode') või muu pileti triipkoodi number
+                input#barcode.form-control(type='text')
 
             .hidden.form-group.col-xs-12.col-sm-2
                 label.control-label(for='check') &nbsp;
-                button#check.btn.btn-info.col-xs-12 Kontrolli
+                button#check.btn.btn-info.col-xs-12 KONTROLLI
 
         .row
             #spinner.hidden.text-center.col-xs-12
@@ -45,7 +45,7 @@ block content
         $('#select_terminal').change(function(event) {
             $(this).attr('disabled', 'disabled')
             $('#barcode, #ticket_id, #check').parent().removeClass('hidden')
-            $('#barcode').focus()
+            $('#ticket_id').focus()
             q_options.term = $(this).val()
         })
 
