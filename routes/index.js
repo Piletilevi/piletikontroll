@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
         if(error) return next(error)
         if(response.statusCode !== 200 || !body.result) return next(new Error(op.get(body, 'error', body)))
 
-        terminals = []
+        var terminals = []
         async.each(body.result, function(entity, callback) {
             request.get({url: APP_ENTU_URL + '/entity-' + entity.id, strictSSL: true, json: true}, function(error, response, body) {
                 if(error) return callback(error)
@@ -42,11 +42,8 @@ router.get('/', function(req, res, next) {
         }, function(error){
             if(error) return next(error)
 
-            terminals = _.sortBy(terminals, 'city')
-            terminals = _.groupBy(terminals, 'city')
-
             res.render('index', {
-                terminals: terminals
+                terminals: _.groupBy(_.sortBy(terminals, 'city'), 'city')
             })
         })
     })
