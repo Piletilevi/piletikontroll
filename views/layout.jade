@@ -24,4 +24,28 @@ html
                         img(src='http://www.piletilevi.ee/userfiles/image/PL_Logo_app.png', alt='Piletilevi logo', style='height:80px')
                 .navbar-text.text-right.col-xs-9.col-sm-10.pull-right(style='margin-right:0px;padding-right:0px') Küsimuste ja probleemide korral palun helistage 665 9539 või 5563 3213 (Jaan / Piletilevi)
 
+        .container
+            .row
+                .col-xs-12
+                    #restart.hidden.alert.alert-info.text-center
+
         block content
+
+        script.
+            var update_interval = setInterval(function() {
+                $.get('/version', q_options, function(data) {
+                    if(data.started !== '#{ APP_STARTED }') {
+                        var sec = 12
+                        var countdown_interval = setInterval(function(){
+                            $('#restart').html('<strong>Saadaval on programmi uuendus!</strong><br>Installeerimiseks lae see leht uuesti või oota ' + sec + ' sekundit...')
+                            $('#restart').removeClass('hidden')
+                            sec -= 1
+                            if(sec < 1) {
+                                clearInterval(countdown_interval)
+                                $('#restart').html('<strong>Laadime programmi uuendust!</strong><br>Palun oota...')
+                                window.location.reload(true)
+                            }
+                        },  1000)
+                    }
+                })
+            }, 1000 * 60 * 10)

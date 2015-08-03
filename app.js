@@ -16,6 +16,7 @@ var debug   = require('debug')('app:' + path.basename(__filename).replace('.js',
 
 // global variables (and list of all used environment variables)
 APP_VERSION   = require('./package').version
+APP_STARTED   = new Date().toISOString()
 APP_DEBUG     = process.env.DEBUG
 APP_PORT      = process.env.PORT || 3000
 APP_LOG_DIR   = process.env.LOGDIR || __dirname + '/log'
