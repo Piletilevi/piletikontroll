@@ -61,7 +61,7 @@ block content
             q_options.op = 'M'
         })
 
-        $('#barcode, #ticket_id').keypress(function(e) {
+        $('#barcode, #ticket_id').keyup(function(e) {
             if(e.which == 13) {
                 $('#check').trigger('click')
             } else {
