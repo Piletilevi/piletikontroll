@@ -33,6 +33,8 @@ block content
                     #results
 
     script.
+        $.ajaxSetup({cache: false})
+
         var q_options = {}
         var statuses = {
             'A': 'alert-success',
