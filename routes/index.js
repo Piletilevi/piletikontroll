@@ -52,8 +52,8 @@ router.get('/', function(req, res, next) {
 
 
 // GET ticket info
-router.get('/ticket', function(req, res, next) {
-    request.get({url: APP_PL_URL, qs: req.query, strictSSL: true, json: true}, function(error, response, body) {
+router.post('/ticket', function(req, res, next) {
+    request.get({url: APP_PL_URL, qs: req.body, strictSSL: true, json: true}, function(error, response, body) {
         if(error) return next(error)
         if(response.statusCode !== 200) return next(new Error(op.get(body, 'error', body)))
 

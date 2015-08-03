@@ -78,7 +78,7 @@ block content
             for(s in statuses) {
                 $('#results').parent().removeClass(statuses[s])
             }
-            $.get('/ticket', q_options, function(data) {
+            $.post('/ticket', q_options, function(data) {
                 var message = data.rows
                 message[0] = '<strong>' + message[0] + '</strong>'
                 $('#results').html(message.join('<br>'))
