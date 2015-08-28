@@ -10,18 +10,18 @@
         "url": "https://github.com/Piletilevi/piletikontroll.git"
     },
     "bugs": {
-        "email": "argo@roots.ee",
         "url": "https://github.com/Piletilevi/piletikontroll/issues"
     },
     "scripts": {
-        "start": "node ./app.js"
+        "start": "node ./master.js"
     },
     "engines": {
-        "node": "0.x"
+        "node": "0.12.x"
     },
     "dependencies": {
         "async": "1.x",
         "body-parser": "1.x",
+        "cluster": "0.x",
         "cookie-parser": "1.x",
         "debug": "2.x",
         "express": "4.x",
