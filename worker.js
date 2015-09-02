@@ -63,4 +63,4 @@ express()
 
 
 
-console.log(new Date().toString() + ' started at port ' + APP_PORT)
+console.log(new Date().toString() + ' started listening port ' + APP_PORT)
