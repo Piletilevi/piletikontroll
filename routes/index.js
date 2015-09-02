@@ -1,11 +1,9 @@
 var express = require('express')
 var router  = express.Router()
-var path    = require('path')
 var request = require('request')
 var async   = require('async')
 var op      = require('object-path')
 var _       = require('underscore')
-var debug   = require('debug')('app:' + path.basename(__filename).replace('.js', ''))
 
 
 
