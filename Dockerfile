@@ -1,4 +1,4 @@
-FROM node:0.12-slim
+FROM node:4.0-slim
 
 ADD ./ /usr/src/piletikontroll
 RUN cd /usr/src/piletikontroll && npm install
