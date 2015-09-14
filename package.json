@@ -7,7 +7,7 @@
     "author": "Argo Roots <argo@roots.ee>",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Piletilevi/piletikontroll.git"
+        "url": "git+https://github.com/Piletilevi/piletikontroll.git"
     },
     "bugs": {
         "url": "https://github.com/Piletilevi/piletikontroll/issues"
@@ -16,7 +16,7 @@
         "start": "node ./master.js"
     },
     "engines": {
-        "node": "0.12.x"
+        "node": "4.0.x"
     },
     "dependencies": {
         "async": "1.x",
