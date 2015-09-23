@@ -3,19 +3,21 @@
 mkdir -p /data/piletikontroll/code /data/piletikontroll/log
 cd /data/piletikontroll/code
 
-git clone https://github.com/Piletilevi/piletikontroll.git ./
-git checkout master
+git clone -q https://github.com/Piletilevi/piletikontroll.git ./
+git checkout -q master
 git pull
+printf "\n\n"
 
 version=`date +"%y%m%d.%H%M%S"`
-
 docker build -q -t piletikontroll:$version ./ && docker tag -f piletikontroll:$version piletikontroll:latest
-docker kill piletikontroll
+printf "\n\n"
+
+docker stop piletikontroll
 docker rm piletikontroll
 docker run -d \
     --name="piletikontroll" \
     --restart="always" \
-    --memory="256m" \
+    --memory="512m" \
     --env="PORT=80" \
     --env="PL_URL=" \
     --env="NEW_RELIC_APP_NAME=piletikontroll" \
@@ -25,5 +27,8 @@ docker run -d \
     --env="NEW_RELIC_NO_CONFIG_FILE=true" \
     --volume="/data/piletikontroll/log:/usr/src/piletikontroll/log" \
     piletikontroll:latest
+
+docker inspect -f "{{ .NetworkSettings.IPAddress }}" piletikontroll
+printf "\n\n"
 
 /data/nginx.sh
