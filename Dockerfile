@@ -1,4 +1,4 @@
-FROM node:4.0-slim
+FROM node:4-slim
 
 ADD ./ /usr/src/piletikontroll
 RUN cd /usr/src/piletikontroll && npm --silent --production install
