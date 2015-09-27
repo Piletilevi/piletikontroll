@@ -21,13 +21,25 @@ APP_SENTRY    = process.env.SENTRY_DSN
 
 
 
+// initialize getsentry.com client
+var raven_client = new raven.Client({
+    release: APP_VERSION,
+    dataCallback: function(data) {
+        delete data.request.env
+        return data
+    }
+})
+
+
+
+// start express app
 express()
     // jade view engine
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'jade')
 
     // logs to getsentry.com - start
-    .use(raven.middleware.express.requestHandler(APP_SENTRY))
+    .use(raven.middleware.express.requestHandler(raven_client))
 
     // parse POST requests
     .use(bparser.json())
@@ -44,7 +56,7 @@ express()
     .use('/',         require('./routes/index'))
 
     // logs to getsentry.com - error
-    .use(raven.middleware.express.errorHandler(APP_SENTRY))
+    .use(raven.middleware.express.errorHandler(raven_client))
 
     // 404
     .use(function(req, res, next) {
