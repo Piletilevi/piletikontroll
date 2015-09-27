@@ -5,6 +5,7 @@ var path    = require('path')
 var stylus  = require('stylus')
 var favicon = require('serve-favicon')
 var bparser = require('body-parser')
+var raven   = require('raven')
 
 
 
@@ -16,6 +17,7 @@ APP_ENTU_URL  = process.env.ENTU_URL || 'https://piletilevi.entu.ee/api2'
 APP_ENTU_USER = process.env.ENTU_USER
 APP_ENTU_KEY  = process.env.ENTU_KEY
 APP_PL_URL    = process.env.PL_URL
+APP_SENTRY    = process.env.SENTRY_DSN
 
 
 
@@ -23,6 +25,9 @@ express()
     // jade view engine
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'jade')
+
+    // logs to getsentry.com - start
+    .use(raven.middleware.express.requestHandler(APP_SENTRY))
 
     // parse POST requests
     .use(bparser.json())
@@ -37,6 +42,9 @@ express()
 
     // routes mapping
     .use('/',         require('./routes/index'))
+
+    // logs to getsentry.com - error
+    .use(raven.middleware.express.errorHandler(APP_SENTRY))
 
     // 404
     .use(function(req, res, next) {

@@ -25,6 +25,7 @@ docker run -d \
     --env="NEW_RELIC_LOG=stdout" \
     --env="NEW_RELIC_LOG_LEVEL=error" \
     --env="NEW_RELIC_NO_CONFIG_FILE=true" \
+    --env="SENTRY_DSN=" \
     --volume="/data/piletikontroll/log:/usr/src/piletikontroll/log" \
     piletikontroll:latest
 
