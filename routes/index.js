@@ -1,5 +1,4 @@
-var express = require('express')
-var router  = express.Router()
+var router  = require('express').Router()
 var request = require('request')
 var async   = require('async')
 var op      = require('object-path')
@@ -58,18 +57,6 @@ router.post('/ticket', function(req, res, next) {
         res.setHeader('Content-Type', 'application/json')
         res.status(200)
         res.send(body)
-    })
-})
-
-
-
-// GET app version and start datetime
-router.get('/version', function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json')
-    res.status(200)
-    res.send({
-        version: APP_VERSION,
-        started: APP_STARTED
     })
 })
 

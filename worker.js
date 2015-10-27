@@ -10,7 +10,7 @@ var raven   = require('raven')
 
 
 // global variables (and list of all used environment variables)
-APP_VERSION   = require('./package').version
+APP_VERSION   = process.env.VERSION || require('./package').version
 APP_STARTED   = new Date().toISOString()
 APP_PORT      = process.env.PORT || 3000
 APP_ENTU_URL  = process.env.ENTU_URL || 'https://piletilevi.entu.ee/api2'
@@ -33,54 +33,49 @@ var raven_client = new raven.Client({
 
 
 // start express app
-express()
-    // jade view engine
-    .set('views', path.join(__dirname, 'views'))
-    .set('view engine', 'jade')
+var app = express()
 
-    // logs to getsentry.com - start
-    .use(raven.middleware.express.requestHandler(raven_client))
+// get correct client IP behind nginx
+app.set('trust proxy', true)
 
-    // parse POST requests
-    .use(bparser.json())
-    .use(bparser.urlencoded({extended: true}))
+// jade view engine
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
 
-    // stylus to css converter
-    .use(stylus.middleware({src: path.join(__dirname, 'public'), compress: true}))
+// logs to getsentry.com - start
+app.use(raven.middleware.express.requestHandler(raven_client))
 
-    // static files path & favicon
-    .use(express.static(path.join(__dirname, 'public')))
-    .use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
+// parse POST requests
+app.use(bparser.json())
+app.use(bparser.urlencoded({extended: true}))
 
-    // routes mapping
-    .use('/',         require('./routes/index'))
+// stylus to css converter
+app.use(stylus.middleware({src: path.join(__dirname, 'public'), compress: true}))
 
-    // logs to getsentry.com - error
-    .use(raven.middleware.express.errorHandler(raven_client))
+// static files path & favicon
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
-    // 404
-    .use(function(req, res, next) {
-        var err = new Error('Not Found')
-        err.status = 404
-        next(err)
+// routes mapping
+app.use('/', require('./routes/index'))
+
+// logs to getsentry.com - error
+app.use(raven.middleware.express.errorHandler(raven_client))
+
+// show error
+app.use(function(err, req, res, next) {
+    res.send({
+        error: err.message,
+        version: APP_VERSION,
+        started: APP_STARTED
     })
 
-    // error
-    .use(function(err, req, res, next) {
-        var status = parseInt(err.status) || 500
-
-        res.status(status)
-        res.render('error', {
-            title: status,
-            message: err.message
-        })
-
-        if(err.status !== 404) console.log(err)
-    })
-
-    // start server
-    .listen(APP_PORT)
+    if(err.status !== 404) console.log(err)
+})
 
 
 
-console.log(new Date().toString() + ' started listening port ' + APP_PORT)
+// start server
+app.listen(APP_PORT, function() {
+    console.log(new Date().toString() + ' started listening port ' + APP_PORT)
+})
