@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p /data/piletikontroll/code /data/piletikontroll/log
+mkdir -p /data/piletikontroll/code
 cd /data/piletikontroll/code
 
 git clone -q https://github.com/Piletilevi/piletikontroll.git ./
@@ -26,7 +26,6 @@ docker run -d \
     --env="NEW_RELIC_LOG_LEVEL=error" \
     --env="NEW_RELIC_NO_CONFIG_FILE=true" \
     --env="SENTRY_DSN=" \
-    --volume="/data/piletikontroll/log:/usr/src/piletikontroll/log" \
     piletikontroll:latest
 
 docker inspect -f "{{ .NetworkSettings.IPAddress }}" piletikontroll
